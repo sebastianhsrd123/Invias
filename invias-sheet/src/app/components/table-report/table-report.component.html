@@ -1,0 +1,48 @@
+<table>
+  <tr>
+    <th>REPORTES EJECUCIÓN MENSUAL CONTRATO</th>
+    <th>FORMATO
+    </th>
+    <th *ngFor="let field of contracts; let i = index">{{field}}</th>
+    <th>NOTAS Y RECOMENDACIONES</th>
+  </tr>
+  <tr *ngFor="let row of rows; let i = index">
+    <td class="text">
+      <a class="text">
+        {{row.title}}
+      </a>
+    </td>
+    <td class="text">
+      <a class="text">
+        {{row.format}}
+      </a>
+    </td>
+    <td *ngFor="let field of contracts; let j = index" class="editable-cell" (dblclick)="editCell(i, j)">
+      <a *ngIf="!changeAgreement" class="text">
+        {{row.agreements![j]}}
+      </a>
+      <input *ngIf="changeAgreement && activeRow === i && activeCol === j" (keyup.escape)="cancelEdit(i, j)"
+        [(ngModel)]="cell" (keyup.enter)="saveEdit(i, j)"
+        [ngClass]="{'check-input': validateRowForm('title'), 'invalid-input': !validateRowForm('title')}">
+    </td>
+    <td>
+
+      {{row.Notes}}
+    </td>
+  </tr>
+
+</table>
+<app-add-button [text]="'Agregar Fila'" (activeButton)="addRows()"></app-add-button>
+
+<div class="border"></div>
+
+<div class="section form" *ngIf="addRow">
+
+  <input [ngClass]="{'check-input': validateRowForm('title'), 'invalid-input': !validateRowForm('title')}"
+    class="input-form" [(ngModel)]="titleRow" placeholder="Contenido del formulario">
+  <input [ngClass]="{'check-input': validateRowForm('format'), 'invalid-input': !validateRowForm('format')}"
+    class="input-form" [(ngModel)]="formatRow" placeholder="Contenido del formulario">
+  <input [ngClass]="{'check-input': validateRowForm('notes'), 'invalid-input': !validateRowForm('notes')}"
+    class="input-form" [(ngModel)]="notesRow" placeholder="Contenido del formulario">
+  <button [disabled]="!activeOptions()" (click)="submitRow()" class="submit-action">Agregar Fila</button>
+</div>

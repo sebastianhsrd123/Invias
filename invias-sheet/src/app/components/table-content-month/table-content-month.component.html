@@ -1,0 +1,65 @@
+<table>
+  <tr>
+    <th>CONTENIDO DEL INFROME MENSUAL</th>
+    <th>formato
+      <app-add-button [text]="'Agregar Columna'" [col]="true" (activeButton)="addCols()"></app-add-button>
+    </th>
+    <th *ngFor="let field of agreements; let i = index">{{field}}</th>
+    <th>NOTAS Y RECOMENDACIONES</th>
+  </tr>
+  <tr *ngFor="let row of rows; let isFirst = first; let i = index">
+    <td class="text">
+      <a class="text">
+        {{row.title}}
+      </a>
+    </td>
+    <td class="text">
+      <a class="text">
+        {{row.format}}
+      </a>
+    </td>
+    <td *ngFor="let field of agreements; let j = index" class="editable-cell" (dblclick)="editCell(i, j)">
+      <a *ngIf="!changeAgreement" class="text">
+        {{row.agreements![j]}}
+      </a>
+      <input *ngIf="changeAgreement && activeRow === i && activeCol === j" (keyup.escape)="cancelEdit(i, j)"
+        [(ngModel)]="cell" (keyup.enter)="saveEdit(i, j)"
+        [ngClass]="{'check-input': validateRowForm('title'), 'invalid-input': !validateRowForm('title')}">
+    </td>
+
+    <ng-container *ngIf="isFirst; else emptyCell">
+      <td [attr.rowspan]="rows.length + 1" class="text editable-cell">
+        <a class="text">
+          {{row.Notes}}
+        </a>
+      </td>
+    </ng-container>
+    <ng-template #emptyCell>
+
+    </ng-template>
+  </tr>
+  <tr>
+
+  </tr>
+</table>
+<app-add-button [text]="'Agregar Fila'" (activeButton)="addRows()"></app-add-button>
+
+<div class="border"></div>
+
+<div class="section form" *ngIf="addRow">
+
+  <input [ngClass]="{'check-input': validateRowForm('title'), 'invalid-input': !validateRowForm('title')}"
+    class="input-form" [(ngModel)]="titleRow" placeholder="Contenido del formulario">
+  <input [ngClass]="{'check-input': validateRowForm('format'), 'invalid-input': !validateRowForm('format')}"
+    class="input-form" [(ngModel)]="formatRow" placeholder="Contenido del formulario">
+  <input *ngIf="rows.length == 0"
+    [ngClass]="{'check-input': validateRowForm('notes'), 'invalid-input': !validateRowForm('notes')}" class="input-form"
+    [(ngModel)]="notesRow" placeholder="Contenido del formulario">
+  <button [disabled]="!activeOptions()" (click)="submitRow()" class="submit-action">Agregar Fila</button>
+</div>
+
+<div class="section form" *ngIf="addCol">
+  <input [ngClass]="{'check-input': validateRowForm('agreement'), 'invalid-input': !validateRowForm('agreement')}"
+    class="input-form" [(ngModel)]="agreementTitle" placeholder="Nombre del convenio">
+  <button [disabled]="!activeOptions('agreement')" (click)="submitCol()" class="submit-action">Agregar Convenio</button>
+</div>

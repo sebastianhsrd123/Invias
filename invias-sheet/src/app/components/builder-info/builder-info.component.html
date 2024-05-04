@@ -1,0 +1,44 @@
+<div class="content">
+  <div class="section">
+    <div class="info-project">
+      <p class="text">
+        <strong>INTERVENTORIA:</strong><span class="text underlined"> {{audit}}</span>
+      </p>
+      <p class="text">
+        <strong>REPRESENTANTE LEGAL:</strong><span class="text underlined"> {{audit}}</span>
+      </p>
+    </div>
+    <div class="info-project">
+      <p class="text">
+        <strong>CONTRATO INT NO:</strong><span class="text underlined"> {{audit}}</span>
+      </p>
+      <p class="text">
+        <strong>INFORME NO:</strong><span class="text underlined"> {{audit}}</span>
+      </p>
+    </div>
+  </div>
+  <div *ngFor="let data of contractorsData" class="section" style="margin-bottom:0!important">
+    <div class="info-project">
+      <p class="text">
+        <strong>CONTRATISTA:</strong><span class="text underlined"> {{data.contractor}}</span>
+      </p>
+    </div>
+    <div class="info-project">
+      <p class="text">
+        <strong>CONVENIO No:</strong><span class="text underlined"> {{data.agreement}}</span>
+      </p>
+    </div>
+  </div>
+  <div class="section form">
+    <input *ngIf="activeContractor"
+      [ngClass]="{'check-input': validateForm('contractor'), 'invalid-input': !validateForm('contractor')}"
+      class="input-form" [(ngModel)]="contractor" placeholder="Nombre del contratista">
+    <input *ngIf="activeContractor"
+      [ngClass]="{'check-input': validateForm('agreement'), 'invalid-input': !validateForm('agreement')}"
+      class="input-form" [(ngModel)]="agreement" placeholder="Numero del convennio">
+    <button *ngIf="activeContractor" [disabled]="!activeOptions('contractor')" class="submit-action"
+      (click)="submitContractor()">Agregar contratista</button>
+  </div>
+  <app-add-button [text]="'Agregar contratista'" (activeButton)="addContractorActive()"></app-add-button>
+  <div class="border"></div>
+</div>
