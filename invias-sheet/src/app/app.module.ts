@@ -11,6 +11,7 @@ import { TableContentMonthComponent } from './components/table-content-month/tab
 import { TableIntroductionComponent } from './components/table-introduction/table-introduction.component';
 import { TableContractsComponent } from './components/table-contracts/table-contracts.component';
 import { TableReportComponent } from './components/table-report/table-report.component';
+import { ReportSheetComponent } from './components/report-sheet/report-sheet.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { TableReportComponent } from './components/table-report/table-report.com
     TableContentMonthComponent,
     TableIntroductionComponent,
     TableContractsComponent,
-    TableReportComponent
+    TableReportComponent,
+    ReportSheetComponent
   ],
   imports: [
     CommonModule,

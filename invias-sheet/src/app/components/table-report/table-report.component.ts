@@ -73,7 +73,7 @@ export class TableReportComponent implements OnInit {
     if (this.validateRowForm('title') && this.validateRowForm('format') && this.validateRowForm('notes')) {
       const agreements: string[] = [];
       await this.contracts.forEach(element => {
-        agreements.push('N/A');
+        agreements.push('DIGITE EL NUMERO DE FORMATO');
       });
       const row: Content = { title: this.titleRow, format: this.formatRow, Notes: this.notesRow, agreements: agreements };
       this.rows.push(row);
