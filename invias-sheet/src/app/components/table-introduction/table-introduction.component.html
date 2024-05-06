@@ -5,21 +5,53 @@
   </tr>
   <tr *ngFor="let row of table; let i = index">
     <td class="text">
-      {{row.introduction}}
+      <a class="tex">
+        {{row.introduction}}
+      </a>
+    </td>
+    <td class="text editable-cell"  (dblclick)="editPosition(i,1)" style="min-width: 90px;">
+      <a class="text" *ngIf="!editCell || positionRow != i || positionCol != 1">
+        {{row.introductionStatus}}
+      </a>
+      <select class="cell-form" *ngIf="editCell && positionCol == 1 && positionRow == i && introduction !== 'OTRO'"
+        [(ngModel)]="introduction" (keyup.enter)="saveData(0)">
+        <option *ngFor="let status of options" [value]="status">{{status}}</option>
+      </select>
+      <input placeholder="Escribe el motivo" class="cell-form"
+        *ngIf="editCell && positionRow == i && positionCol == 1 && introduction === 'OTRO'" (keyup.escape)="introduction = ''"
+        [(ngModel)]="cellOther" (keyup.enter)="saveData(0)">
+      <button *ngIf="editCell && positionCol == 1 &&  positionRow == i" class="check"
+        [disabled]="!validateCell('intro')"
+        (click)="saveData(0)"><i class="fa fa-check-circle"></i></button>
+
+
     </td>
     <td class="text">
-      {{row.introductionStatus}}
+      <a class="text">
+        {{row.description}}
+      </a>
     </td>
-    <td class="text">
-      {{row.description}}
-    </td>
-    <td class="text">
-      {{row.descriptionStatus}}
+    <td class="text editable-cell" (dblclick)="editPosition(i,2)" style="min-width: 90px;">
+      <a class="text" *ngIf="!editCell || positionRow != i || positionCol != 2">
+        {{row.descriptionStatus }}
+      </a>
+      <select class="cell-form" *ngIf="editCell && positionRow == i && positionCol == 2 && description !== 'OTRO'"
+        [(ngModel)]="description" (keyup.enter)="saveData(1)">
+        <option *ngFor="let status of options" [value]="status">{{status}}</option>
+      </select>
+      <input placeholder="Escribe el motivo" class="cell-form"
+        *ngIf="editCell && positionRow == i  && positionCol == 2 && description === 'OTRO'"
+        (keyup.escape)="description = ''" [(ngModel)]="cellOther" (keyup.enter)="saveData(1)">
+      <button *ngIf="editCell && positionRow == i && positionCol == 2" class="check"
+        [disabled]="!validateCell('desc')" (click)="saveData(1)"><i
+          class="fa fa-check-circle"></i></button>
     </td>
   </tr>
 </table>
 
 <div class="section form" *ngIf="addRow">
+  <!-- AGREGAR COLUMNAS DINAMICAMENTE
+
 
   <input [ngClass]="{'check-input': validateRowForm('Introduction'), 'invalid-input': !validateRowForm('Introduction')}"
     class="input-form" [(ngModel)]="introduction" placeholder="Ingrese la Introducción">
@@ -30,9 +62,9 @@
   <input [ngClass]="{'check-input': validateRowForm('descriptionStatus'), 'invalid-input': !validateRowForm('descriptionStatus')}" class="input-form"
     [(ngModel)]="descriptionStatus" placeholder="Ingrese el estado de la descripcion">
   <button [disabled]="!activeOptions()" (click)="submitRow()" class="submit-action">Agregar Fila</button>
+  -->
 </div>
-
+<!--
 <app-add-button [text]="'Agregar Fila'" (activeButton)="addRows()"></app-add-button>
+-->
 <div class="border"></div>
-
-

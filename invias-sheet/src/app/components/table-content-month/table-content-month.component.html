@@ -1,8 +1,13 @@
 <table>
   <tr>
     <th>CONTENIDO DEL INFROME MENSUAL</th>
-    <th>formato
+    <th>FORMATO
+      <!--
       <app-add-button [text]="'Agregar Columna'" [col]="true" (activeButton)="addCols()"></app-add-button>
+      -->
+    </th>
+    <th *ngIf="intervenor">
+      INT {{intervenor}}
     </th>
     <th *ngFor="let field of agreements; let i = index">{{field}}</th>
     <th>NOTAS Y RECOMENDACIONES</th>
@@ -18,32 +23,57 @@
         {{row.format}}
       </a>
     </td>
-    <td *ngFor="let field of agreements; let j = index" class="editable-cell" (dblclick)="editCell(i, j)">
-      <a *ngIf="!changeAgreement" class="text">
-        {{row.agreements![j]}}
+    <td class="text" [ngClass]="{'editable-cell': isFirst}" *ngIf="intervenor" (dblclick)="editInt(isFirst)">
+      <select class="cell-form" *ngIf="isFirst && intStatus!='OTRO' && intStatusActive" [(ngModel)]="intStatus"
+        (keyup.enter)="saveInt()">
+        <option *ngFor="let status of options" [value]="status">{{status}}</option>
+      </select>
+      <input placeholder="Ingrese el motivo" class="cell-form" *ngIf="isFirst && intStatusActive && intStatus=='OTRO'" (keyup.escape)="intStatus = ''"
+        [(ngModel)]="intStatusOther" (keyup.enter)="saveIntOther()">
+      <button *ngIf="isFirst && intStatusActive && intStatus == 'OTRO'" class="check" [disabled]="!activeOptions('intervenor')"
+        (click)="saveIntOther()"><i class="fa fa-check-circle"></i></button>
+      <button *ngIf="intStatus !='OTRO' && intStatusActive && isFirst" class="check"
+        [disabled]="!activeOptions('intervenor')" (click)="saveInt()"><i class="fa fa-check-circle"></i></button>
+
+      <a class="text" *ngIf="isFirst && intStatus && !intStatusActive">
+        {{intStatus}}
       </a>
-      <input *ngIf="changeAgreement && activeRow === i && activeCol === j" (keyup.escape)="cancelEdit(i, j)"
-        [(ngModel)]="cell" (keyup.enter)="saveEdit(i, j)"
-        [ngClass]="{'check-input': validateRowForm('title'), 'invalid-input': !validateRowForm('title')}">
+      <a class="text" *ngIf="!isFirst">
+        N/A
+      </a>
+    </td>
+    <td *ngFor="let field of agreements; let j = index" class="editable-cell" (dblclick)="editCell(i, j, isFirst)">
+      <a *ngIf="isFirst" class="text">
+        N/A
+      </a>
+      <a *ngIf="(!changeAgreement && !isFirst) || activeRow !== i || activeCol !== j" class="text">
+        {{ row.agreements![j]}}
+      </a>
+      <select class="cell-form"
+        *ngIf="changeAgreement && !isFirst && activeRow === i && activeCol === j && cell != 'OTRO'" [(ngModel)]="cell"
+        (keyup.enter)="saveEdit(i, j)" (keyup.escape)="cancelEdit(i, j)">
+        <option *ngFor="let status of options" [value]="status">{{status}}</option>
+      </select>
+      <input class="cell-form" placeholder="Ingrese el motivo"
+        *ngIf="changeAgreement && !isFirst && activeRow === i && activeCol === j && cell == 'OTRO'"
+        (keyup.escape)="cell = ''" [(ngModel)]="otherCell" (keyup.enter)="saveEdit(i, j)">
+      <button *ngIf="changeAgreement && !isFirst && activeRow === i && activeCol === j" class="check"
+        [disabled]="!activeOptions('cell')" (click)="saveEdit(i, j)"><i class="fa fa-check-circle"></i></button>
     </td>
 
-    <ng-container *ngIf="isFirst; else emptyCell">
-      <td [attr.rowspan]="rows.length + 1" class="text editable-cell">
-        <a class="text">
-          {{row.Notes}}
-        </a>
-      </td>
-    </ng-container>
-    <ng-template #emptyCell>
-
-    </ng-template>
+    <td class="text editable-cell">
+      <a class="text">
+        {{row.Notes}}
+      </a>
+    </td>
   </tr>
   <tr>
 
   </tr>
 </table>
+<!--
 <app-add-button [text]="'Agregar Fila'" (activeButton)="addRows()"></app-add-button>
-
+-->
 <div class="border"></div>
 
 <div class="section form" *ngIf="addRow">

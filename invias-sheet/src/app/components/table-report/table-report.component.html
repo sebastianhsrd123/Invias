@@ -3,6 +3,9 @@
     <th>REPORTES EJECUCIÓN MENSUAL CONTRATO</th>
     <th>FORMATO
     </th>
+    <th *ngIf="intervenor">
+      INT {{intervenor}}
+    </th>
     <th *ngFor="let field of contracts; let i = index">{{field}}</th>
     <th>NOTAS Y RECOMENDACIONES</th>
   </tr>
@@ -17,13 +20,43 @@
         {{row.format}}
       </a>
     </td>
-    <td *ngFor="let field of contracts; let j = index" class="editable-cell" (dblclick)="editCell(i, j)">
-      <a *ngIf="!changeAgreement" class="text">
+    <td class="text" *ngIf="intervenor" (dblclick)="editInt(i)" [ngClass]="{'editable-cell':!validateFieldsIntervenor(i)}">
+      <a class="text" *ngIf="validateFieldsIntervenor(i)">
+        N/A
+      </a>
+      <a class="text" *ngIf="!validateFieldsIntervenor(i)">
+        <select class="cell-form" *ngIf="intStatus[i] !='OTRO' && intStatusActive && positionRow == i"
+          [(ngModel)]="intStatus[i]" (keyup.enter)="saveInt(i)">
+          <option *ngFor="let status of options" [value]="status">{{status}}</option>
+        </select>
+        <input placeholder="Ingrese el motivo" class="cell-form"
+          *ngIf="intStatusActive && intStatus[i]=='OTRO' && positionRow == i" (keyup.escape)="intStatus[i] = ''"
+          [(ngModel)]="intStatusOther" (keyup.enter)="saveIntOther(i)">
+        <button *ngIf="intStatusActive && intStatus[i]=='OTRO' && positionRow == i" class="check" [disabled]="!intStatusOther"
+          (click)="saveIntOther(i)"><i class="fa fa-check-circle"></i></button>
+        <button *ngIf="intStatus[i] !='OTRO' && intStatusActive && positionRow == i" class="check" [disabled]="!activeOptions('intervenor', i)"
+          (click)="saveInt(i)"><i class="fa fa-check-circle"></i></button>
+        <a *ngIf="!intStatusActive || positionRow != i">{{intStatus[i]}}</a>
+      </a>
+    </td>
+    <td *ngFor="let field of contracts; let j = index" [ngClass]="{'editable-cell':!validateFieldsContract(i)}" (dblclick)="editCell(i, j)">
+      <a *ngIf="!changeAgreement  || activeRow != i || activeCol != j" class="text">
         {{row.agreements![j]}}
       </a>
-      <input *ngIf="changeAgreement && activeRow === i && activeCol === j" (keyup.escape)="cancelEdit(i, j)"
-        [(ngModel)]="cell" (keyup.enter)="saveEdit(i, j)"
-        [ngClass]="{'check-input': validateRowForm('title'), 'invalid-input': !validateRowForm('title')}">
+      <a *ngIf="validateFieldsContract(i)" class="text">
+        N/A
+      </a>
+      <select class="cell-form" [(ngModel)]="cell"
+        *ngIf="changeAgreement && activeRow === i && activeCol === j && cell !== 'OTRO' && !validateFieldsContract(i)"
+        (keyup.escape)="cancelEdit(i, j)" (keyup.enter)="saveEdit(i, j)">
+        <option *ngFor="let status of options" [value]="status">{{status}}</option>
+      </select>
+      <input placeholder="Ingrese el motivo" class="cell-form"
+        *ngIf="changeAgreement && activeRow === i && activeCol === j && cell === 'OTRO' && !validateFieldsContract(i)"
+        (keyup.escape)="cell = ''" (keyup.enter)="saveEdit(i, j)" [(ngModel)]="cellOther">
+      <button *ngIf="changeAgreement && activeRow === i && activeCol === j && !validateFieldsContract(i)" class="check" [disabled]="!activeOptions('contract')"
+        (click)="saveEdit(i,j)"><i class="fa fa-check-circle"></i></button>
+
     </td>
     <td>
 

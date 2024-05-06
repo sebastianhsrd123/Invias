@@ -36,6 +36,31 @@
   position: relative;
 }
 
+.check{
+  background-color: #42b442;
+  border: none;
+  margin: 0;
+  margin-left: 5px;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 1px 1px 4px #000;
+  cursor: pointer;
+}
+
+.check:hover{
+  background-color: #00a800;
+}
+
+.check:active{
+  background-color: #037503;
+}
+
+.check:disabled{
+  background-color: #d3d3d3;
+  color: #000;
+  cursor: not-allowed;
+}
+
 .info-project{
   text-align: end;
   width: 50%;
@@ -49,6 +74,15 @@
   width: 50%;
   padding-left: 20px;
   padding-right: 20px;
+}
+
+.cell-form{
+  width: 70%;
+  height: 80%;
+  border: gray;
+  box-shadow: 1px 1px 4px #000;
+  margin-left: 20px;
+  background-color: #fff;
 }
 
 .form{

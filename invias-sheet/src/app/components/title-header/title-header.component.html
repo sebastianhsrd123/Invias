@@ -1,11 +1,12 @@
 <section class="header">
   <div class="title">
-    <h1 class="first-parraf">INSTITUTO NACIONAL DE VIAS</h1>
-    <h2 class="second-parraf">DIRECCIÓN TERRITORIAL ANTIOQUIA</h2>
-    <p class="text-style">PROGRAMA CAMINOS COMUNITARIOS PARA LA PAZ TOTAL</p>
+    <h1 class="first-parraf"><strong>INSTITUTO NACIONAL DE VIAS</strong></h1>
+    <h2 class="second-parraf"><strong>DIRECCIÓN TERRITORIAL ANTIOQUIA</strong></h2>
+    <p *ngIf="!editTitle" (dblclick)="changeTitle()" class="text-style editable-cell">{{title}}</p>
+    <p *ngIf="editTitle"><input type="text" (keyup.escape)="changeTitle()" class="input-form" placeholder="ingrese el titulo" [(ngModel)]="newTitle" (keyup.enter)="saveTitle()"></p>
     <p class="text-style">OSERVACIONES INFORME MENSUAL DE INETERVENTORÍA</p>
   </div>
   <div class="logo">
-    <img src="assets/img/invias.png" width="150" alt="Logo INVIAS">
+    <img src="assets/img/invias.png" width="190" alt="Logo INVIAS">
   </div>
 </section>

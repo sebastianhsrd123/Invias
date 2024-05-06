@@ -1,0 +1,56 @@
+body{
+  position: relative;
+  background-color: gray;
+  height: 100%;
+  font-size: 1.1rem;
+}
+
+h1{
+  font-size: 1.5rem;
+  text-align: center;
+  line-height: 1.1rem;
+}
+
+h2{
+  font-size: 1.2rem;
+}
+.textobold{
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.App {
+  position: absolute;
+  left: 50%;
+  align-items: center;
+  background-color: white;
+  width: 1024px;
+  transform: translate(-50%, 0);
+  box-shadow: 1px 1px 4px 1px black;
+}
+
+.pagina{
+  margin: 2cm;
+}
+
+.headerdiv {
+  padding-left: 10%;
+}
+
+.inginterventor{
+  padding-top: 1pt;
+  text-indent: 0pt;
+}
+
+.columns{
+  display: flex;
+  text-align: left;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  justify-content: space-around;
+
+  ul:first-child{
+    padding: 0;
+  }
+}

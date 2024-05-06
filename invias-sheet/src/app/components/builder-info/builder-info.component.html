@@ -2,18 +2,25 @@
   <div class="section">
     <div class="info-project">
       <p class="text">
-        <strong>INTERVENTORIA:</strong><span class="text underlined"> {{audit}}</span>
+        <strong>INTERVENTORIA:</strong><span (dblclick)="submitIntName()" *ngIf="!intNameActive" class="text underlined editable-cell"> {{interventory}}</span>
+        <input style="margin-left:10px" (keyup.enter)="submitIntName()"  *ngIf="!interventory || intNameActive" [(ngModel)] = "interventory" type="text" class="input-form" placeholder="Ingrese El nombre de la interventoria">
+        <button *ngIf="!interventory || intNameActive" class="check" [disabled]="!checkInt()"><i class="fa fa-check-circle" (click)="submitIntName()"></i></button>
       </p>
       <p class="text">
-        <strong>REPRESENTANTE LEGAL:</strong><span class="text underlined"> {{audit}}</span>
+        <strong>REPRESENTANTE LEGAL:</strong><span (dblclick)="submitManager()" *ngIf="!legalManagerActive" class="text underlined editable-cell"> {{legalManager}}</span>
+        <input style="margin-left:10px" (keyup.enter)="submitManager()" *ngIf="!legalManager || legalManagerActive" [(ngModel)] = "legalManager" type="text" class="input-form" placeholder="Ingrese El nombre del representante legal">
+        <button *ngIf="!legalManager || legalManagerActive" class="check" [disabled]="!checkManager()"><i class="fa fa-check-circle" (click)="submitManager()"></i></button>
       </p>
     </div>
     <div class="info-project">
       <p class="text">
-        <strong>CONTRATO INT NO:</strong><span class="text underlined"> {{audit}}</span>
-      </p>
+        <strong>CONTRATO INT NO:</strong><span (dblclick)="submitContract()" *ngIf="!contractActive" class="text underlined editable-cell"> {{contract}}</span>
+        <input style="margin-left:10px" (keyup.enter)="submitContract()"  *ngIf="!contract || contractActive" [(ngModel)] = "contract" type="text" class="input-form" placeholder="Ingrese el numero de contrato">
+        <button *ngIf="!contract || contractActive" class="check" [disabled]="!checkContract()"><i class="fa fa-check-circle" (click)="submitContract()"></i></button>
       <p class="text">
-        <strong>INFORME NO:</strong><span class="text underlined"> {{audit}}</span>
+        <strong>INFORME NO:</strong><span (dblclick)="submitReport()" *ngIf="!reportActive" class="text underlined editable-cell"> {{report}}</span>
+        <input style="margin-left:10px" (keyup.enter)="submitReport()"  *ngIf="!report || reportActive" [(ngModel)] = "report" type="text" class="input-form" placeholder="Ingrese el numero del informe">
+        <button *ngIf="!report || reportActive" class="check" [disabled]="!checkReport()"><i class="fa fa-check-circle" (click)="submitReport()"></i></button>
       </p>
     </div>
   </div>

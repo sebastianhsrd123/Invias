@@ -1,9 +1,9 @@
 <main class="container">
   <app-title-header></app-title-header>
-  <app-builder-info></app-builder-info>
-  <app-table-content-month (sendContracts)="receiveContracts($event)"></app-table-content-month>
+  <app-builder-info (sendContract)="receiveInt($event)" (sendContractor)="receiveContracts($event)"></app-builder-info>
+  <app-table-content-month [intervenor] = "intervenor" [agreements]="contracts"></app-table-content-month>
   <app-table-introduction></app-table-introduction>
-  <app-table-contracts [contracts]="contracts"></app-table-contracts>
-  <app-table-report [contracts]="contracts"></app-table-report>
+  <app-table-contracts [intervenor] = "intervenor" [contracts]="contracts"></app-table-contracts>
+  <app-table-report [intervenor] = "intervenor" [contracts]="contracts"></app-table-report>
 </main>
 <app-report-sheet></app-report-sheet>
