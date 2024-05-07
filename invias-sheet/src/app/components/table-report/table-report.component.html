@@ -7,7 +7,6 @@
       INT {{intervenor}}
     </th>
     <th *ngFor="let field of contracts; let i = index">{{field}}</th>
-    <th>NOTAS Y RECOMENDACIONES</th>
   </tr>
   <tr *ngFor="let row of rows; let i = index">
     <td class="text">
@@ -57,10 +56,6 @@
       <button *ngIf="changeAgreement && activeRow === i && activeCol === j && !validateFieldsContract(i)" class="check" [disabled]="!activeOptions('contract')"
         (click)="saveEdit(i,j)"><i class="fa fa-check-circle"></i></button>
 
-    </td>
-    <td>
-
-      {{row.Notes}}
     </td>
   </tr>
 

@@ -5,7 +5,6 @@
       INT {{intervenor}}
     </th>
     <th *ngFor="let field of contracts; let i = index">{{field}}</th>
-    <th>NOTAS Y RECOMENDACIONES</th>
   </tr>
   <tr *ngFor="let row of rows; let i = index; let isLast = last">
     <td class="text">
@@ -47,11 +46,6 @@
         (click)="saveEdit(i,j)"><i class="fa fa-check-circle"></i></button>
       <a *ngIf="isLast" class="text">N/A</a>
 
-    </td>
-    <td class="text">
-      <a class="text">
-        {{row.Notes}}
-      </a>
     </td>
   </tr>
 </table>

@@ -10,7 +10,6 @@
       INT {{intervenor}}
     </th>
     <th *ngFor="let field of agreements; let i = index">{{field}}</th>
-    <th>NOTAS Y RECOMENDACIONES</th>
   </tr>
   <tr *ngFor="let row of rows; let isFirst = first; let i = index">
     <td class="text">
@@ -61,11 +60,6 @@
         [disabled]="!activeOptions('cell')" (click)="saveEdit(i, j)"><i class="fa fa-check-circle"></i></button>
     </td>
 
-    <td class="text editable-cell">
-      <a class="text">
-        {{row.Notes}}
-      </a>
-    </td>
   </tr>
   <tr>
 

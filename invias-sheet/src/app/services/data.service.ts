@@ -20,6 +20,7 @@ export class DataService {
   dataContracts: Content[] = [];
   dataMonth: Content[] = [];
   dataReport: Content[] = [];
+  notesData: string = '';
   constructor() {
     this.dataTitle = '';
     this.manager = '';

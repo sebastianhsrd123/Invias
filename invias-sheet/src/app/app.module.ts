@@ -12,6 +12,7 @@ import { TableIntroductionComponent } from './components/table-introduction/tabl
 import { TableContractsComponent } from './components/table-contracts/table-contracts.component';
 import { TableReportComponent } from './components/table-report/table-report.component';
 import { ReportSheetComponent } from './components/report-sheet/report-sheet.component';
+import { NoteTableComponent } from './components/note-table/note-table.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ReportSheetComponent } from './components/report-sheet/report-sheet.com
     TableIntroductionComponent,
     TableContractsComponent,
     TableReportComponent,
-    ReportSheetComponent
+    ReportSheetComponent,
+    NoteTableComponent
   ],
   imports: [
     CommonModule,
