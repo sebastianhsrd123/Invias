@@ -2,4 +2,37 @@
   margin: 50px;
   border: 2px solid #000;
   min-width: 815px;
+  position: relative;
 }
+
+.owner{
+  position: absolute;
+  bottom: -50px;
+}
+
+.main-button{
+  display: flex;
+  width: 100%;
+}
+.generate-button{
+  width: 500px;
+  height: 50px;
+  margin: auto;
+  margin-bottom: 20px;
+  background-color: #5050d7;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  border: 0;
+  border-radius: 8px;
+}
+
+.generate-button:hover{
+  background-color: #3a3abf;
+  cursor: pointer;
+}
+
+.generate-button:active{
+  background-color: #2e2e9f;
+}
+

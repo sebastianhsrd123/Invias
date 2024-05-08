@@ -11,6 +11,7 @@ export class BuilderInfoComponent implements OnInit {
 
   @Output() sendContract: EventEmitter<string> = new EventEmitter<string>();
   @Output() sendContractor: EventEmitter<Contractor> = new EventEmitter();
+  @Output() deleteContract: EventEmitter<any> = new EventEmitter();
   contractorsData: Contractor[];
   contractor: string;
   agreement: string;
@@ -53,6 +54,12 @@ export class BuilderInfoComponent implements OnInit {
     this.service.setContractor(this.contractorsData);
   }
 
+  deleteContractor(index:number) {
+    this.contractorsData.splice(index, 1);
+    this.deleteContract.emit(index);
+    this.service.setContractor(this.contractorsData);
+  }
+
   activeOptions(field: string):boolean{
     if (field === 'contractor' && this.validateForm('contractor') && this.validateForm('agreement')) return true;
     return false;
@@ -67,6 +74,7 @@ export class BuilderInfoComponent implements OnInit {
       this.activeContractor = false;
     }
   }
+
 
   checkInt():boolean{
     if(this.interventory.trim().length > 0) return true;

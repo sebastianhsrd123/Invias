@@ -157,7 +157,7 @@ export class TableReportComponent implements OnInit {
   }
 
   async submitRow() {
-    if (this.validateRowForm('title') && this.validateRowForm('format') && this.validateRowForm('notes')) {
+    if (this.validateRowForm('title') && this.validateRowForm('format')) {
       const agreements: string[] = [];
       await this.contracts.forEach(element => {
         agreements.push('');
@@ -173,7 +173,7 @@ export class TableReportComponent implements OnInit {
   }
 
   activeOptions(field?: string, row?: number): boolean {
-    if (this.validateRowForm('title') && this.validateRowForm('format') && this.validateRowForm('notes')) return true;
+    if (this.validateRowForm('title') && this.validateRowForm('format')) return true;
     if (field === 'intervenor' && this.validateRowForm('intervenor', row)) return true;
     if (field === 'contract' && this.validateRowForm('contract', row)) return true;
     return false;

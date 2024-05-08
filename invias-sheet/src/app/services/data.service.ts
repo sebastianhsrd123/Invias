@@ -21,6 +21,7 @@ export class DataService {
   dataMonth: Content[] = [];
   dataReport: Content[] = [];
   notesData: string = '';
+  owner: string = '';
   constructor() {
     this.dataTitle = '';
     this.manager = '';
@@ -77,6 +78,7 @@ export class DataService {
   getContractor(){
     return this.contractor;
   }
+
 
 
 

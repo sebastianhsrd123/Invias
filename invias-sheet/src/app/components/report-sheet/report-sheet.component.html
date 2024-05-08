@@ -1,141 +1,153 @@
-<div class="App">
-  <div class="pagina">
-    <p style="text-align:right">Fecha del reporte: {{date | date: 'short'}}</p>
-    <div class='headerdiv'>
-      <h1>INSTITUTO NACIONAL DE VIAS </h1>
-      <h1>DIRECCIÓN TERRITORIAL ANTIOQUIA</h1>
-      <h1 *ngIf="showTitle()">{{showTitle()}}</h1>
-      <h1>REPORTE INFORME MENSUAL DE INTERVENTORÍA</h1>
-      <li class="columns">
-        <ul *ngIf="showManager()">
-          <h6 style="margin-bottom:0">Ingeniero interventor: {{showManager()}}</h6>
+<div class="modal-container" style="overflow-y:scroll">
+  <div class="close">
+    <i class="fa fa-times" (click)="close()"></i>
+  </div>
+  <button class="pdf-button" (click)="generatePDF()">
+    <i class="fa fa-file-pdf-o"></i> Generar PDF
+  </button>
+  <div class="modal">
+    <div class="App">
+      <div id="element-to-print" class="pagina" style="width: 215mm; height: 330mm">
+        <img src="assets/img/invias-Logo.png" width="140" alt="Logo INVIAS">
+        <p style="text-align:right">Fecha del reporte: {{date | date: 'short'}}</p>
+        <div class='headerdiv'>
+          <h1>INSTITUTO NACIONAL DE VIAS </h1>
+          <h1>DIRECCIÓN TERRITORIAL ANTIOQUIA</h1>
+          <h1 *ngIf="showTitle()">{{showTitle()}}</h1>
+          <h1>REPORTE INFORME MENSUAL DE INTERVENTORÍA</h1>
+          <li class="columns">
+            <ul *ngIf="showManager()">
+              <h6 style="margin-bottom:0">Ingeniero interventor: {{showManager()}}</h6>
+            </ul>
+            <ul *ngIf="showContract()">
+              <h6 style="margin-bottom:0"> Contrato No.: {{showContract()}}</h6>
+            </ul>
+          </li>
+          <h6 *ngIf="showReport()" style="font-size: 14px;">Este documento es un reporte al informe mensual No.
+            {{showReport()}} según los datos a continuación.</h6>
+          <p style="text-align:right">
+          <div *ngIf="showContractor()">
+            <li *ngFor="let contract of contractor" class="columns">
+              <ul>
+                <h6 style="margin:0"><strong>CONVENIO:</strong> {{contract.agreement}} </h6>
+              </ul>
+              <ul>
+                <h6 style="margin:0"><strong>CONTRATISTA:</strong> {{contract.contractor}}</h6>
+              </ul>
+            </li>
+          </div>
+
+
+        </div>
+        <p>
+        <h2>OBSERVACIONES GENERALES DEL PROYECTO</h2>
+
+        <p><i>INTRODUCCIÓN.</i></p>
+        <ul>
+          <li
+            *ngIf="dataService.tableIntroduction[0].introductionStatus && dataService.tableIntroduction[0].introductionStatus !='OK'">
+            LOCALIZACIÓN DEL PROYECTO: {{dataService.tableIntroduction[0].introductionStatus}}</li>
+          <li
+            *ngIf="dataService.tableIntroduction[1].introductionStatus && dataService.tableIntroduction[1].introductionStatus !='OK'">
+            ZONA DE INFLUENCIA: {{dataService.tableIntroduction[1].introductionStatus}}</li>
+          <li
+            *ngIf="dataService.tableIntroduction[2].introductionStatus && dataService.tableIntroduction[2].introductionStatus !='OK'">
+            INVENTARIO Y ESTADO INICIAL DE LA VÍA: {{dataService.tableIntroduction[2].introductionStatus}}</li>
+          <li
+            *ngIf="dataService.tableIntroduction[3].introductionStatus && dataService.tableIntroduction[3].introductionStatus !='OK'">
+            CARACTERÍSTICAS TECNICAS DEL PROYECTO: {{dataService.tableIntroduction[3].introductionStatus}}</li>
         </ul>
-        <ul *ngIf="showContract()">
-          <h6 style="margin-bottom:0"> Contrato No.: {{showContract()}}</h6>
+
+        <p><i>DESCRIPCIÓN DEL PROYECTO.</i></p>
+        <ul>
+          <li
+            *ngIf="dataService.tableIntroduction[0].descriptionStatus && dataService.tableIntroduction[0].descriptionStatus !='OK'">
+            PROCESO DE SELECCIÓN: {{dataService.tableIntroduction[0].descriptionStatus}}</li>
+          <li
+            *ngIf="dataService.tableIntroduction[1].descriptionStatus && dataService.tableIntroduction[1].descriptionStatus !='OK'">
+            ID SECOP: {{dataService.tableIntroduction[1].descriptionStatus}}</li>
+          <li
+            *ngIf="dataService.tableIntroduction[2].descriptionStatus && dataService.tableIntroduction[2].descriptionStatus !='OK'">
+            INFORMACIÓN DEL PROGRAMA O PLAN DE GOBIERNO: {{dataService.tableIntroduction[2].descriptionStatus}}</li>
+          <li
+            *ngIf="dataService.tableIntroduction[1].descriptionStatus && dataService.tableIntroduction[1].descriptionStatus !='OK'">
+            PERSONAL A CARGO DE PARTE DEL INVIAS: {{dataService.tableIntroduction[3].descriptionStatus}}</li>
         </ul>
-      </li>
-      <h6 *ngIf="showReport()" style="font-size: 14px;">Este documento es un reporte al informe mensual No.
-        {{showReport()}} según los datos a continuación.</h6>
-      <p style="text-align:right">
-      <div *ngIf="showContractor()">
-        <li *ngFor="let contract of contractor" class="columns">
-          <ul>
-            <h6 style="margin:0"><strong>CONVENIO:</strong> {{contract.agreement}} </h6>
+
+        <h2>OBSERVACIONES AL CONTRATO DE INTERVENTORÍA</h2>
+        <p><i>INFORMACIÓN DEL CONTRATO</i></p>
+        <ul>
+          <li *ngIf="dataService.contractIntervenor[0] && dataService.contractIntervenor[0] !== 'OK'">INFORMACIÓN GENERAL
+            DEL CONTRATO: {{dataService.contractIntervenor[0]}}</li>
+          <li *ngIf="dataService.contractIntervenor[1] && dataService.contractIntervenor[1] !== 'OK'">DESCRIPCIÓN DE
+            ACTIVIDADES EJECUTADAS MES: {{dataService.contractIntervenor[1]}}</li>
+          <li *ngIf="dataService.contractIntervenor[2] && dataService.contractIntervenor[2] !== 'OK'">ITEMS NO PREVISTOS:
+            {{dataService.contractIntervenor[2]}}</li>
+          <li *ngIf="dataService.contractIntervenor[3] && dataService.contractIntervenor[3] !== 'OK'">AVANCE Y ACCIONES A
+            SEGUIR: {{dataService.contractIntervenor[3]}}</li>
+        </ul>
+
+        <p><i>CONTENIDO DEL INFORME MENSUAL</i></p>
+        <ul>
+          <li *ngIf="dataService.monthIntervenor  && dataService.monthIntervenor != 'OK'">MEPI-MN1-IN-15-FR-1 - LISTA DE
+            CHEQUEO: {{dataService.monthIntervenor}}</li>
+        </ul>
+
+        <p><i>REPORTES EJECUCIÓN MENSUAL CONTRATO DE INTERVENTORÍA</i></p>
+        <ul>
+          <li *ngIf="this.dataService.reportIntervenor[1] && this.dataService.reportIntervenor[1] != 'OK'">
+            MEPI-MN1-IN-15-FR-4 - MAQUINARIA Y EQUIPO: {{this.dataService.reportIntervenor[1]}}</li>
+          <li *ngIf="this.dataService.reportIntervenor[2] && this.dataService.reportIntervenor[2] != 'OK'">
+            MEPI-MN1-IN-15-FR-5 - EQUIPO Y VEHÍCULOS: {{this.dataService.reportIntervenor[2]}}</li>
+          <li *ngIf="this.dataService.reportIntervenor[4] && this.dataService.reportIntervenor[4] != 'OK'">
+            MEPI-MN1-IN-15-FR-7 - PERSONAL, CONTROL DE APORTES Y SEGURIDAD SOCIAL: {{this.dataService.reportIntervenor[4]}}
+          </li>
+          <li *ngIf="this.dataService.reportIntervenor[6] && this.dataService.reportIntervenor[6] != 'OK'">
+            MEPI-MN1-IN-15-FR-9 - INFORME FINANCIERO: {{this.dataService.reportIntervenor[6]}} </li>
+          <li *ngIf="this.dataService.reportIntervenor[8] && this.dataService.reportIntervenor[8] != 'OK'">
+            MEPI-MN1-IN-15-FR-11 - ENSAYOS DE LABORATORIO: {{this.dataService.reportIntervenor[8]}}</li>
+          <li *ngIf="this.dataService.reportIntervenor[10] && this.dataService.reportIntervenor[10] != 'OK'">
+            MEPI-MN1-IN-15-FR-13 - SEGUIMIENTO GARANTÍAS Y SEGUROS: {{this.dataService.reportIntervenor[10]}}</li>
+          <li *ngIf="this.dataService.reportIntervenor[12] && this.dataService.reportIntervenor[12] != 'OK'">
+            MEPI-MN1-IN-9-FR-2 - PLAN DE CARGAS: {{this.dataService.reportIntervenor[12]}}</li>
+          <li *ngIf="this.dataService.reportIntervenor[13] && this.dataService.reportIntervenor[13] != 'OK'">
+            MEPI-MN1-IN-9-FR-2 - SEGUIMIENTO AL PLAN DE CARGAS:{{this.dataService.reportIntervenor[13]}}</li>
+          <li *ngIf="this.dataService.reportIntervenor[16] && this.dataService.reportIntervenor[16] != 'OK'">CONCLUSIONES
+            Y/O RECOMENDACIONES: {{this.dataService.reportIntervenor[16]}}</li>
+        </ul>
+
+        <div *ngFor="let contract of contractor; let i = index">
+          <h2>OBSERVACIONES AL CONTRATO DE OBRA O CONVENIO No.: {{contract.agreement}}</h2>
+
+          <p><i>INFORMACIÓN DEL CONTRATO</i></p>
+          <ul *ngFor="let data of dataService.dataContracts; let isLast = last">
+            <li *ngIf="!isLast && data.agreements![i] && data.agreements![i] !='OK'">{{data.title | uppercase }}:
+              {{data.agreements![i]}}</li>
           </ul>
-          <ul>
-            <h6 style="margin:0"><strong>CONTRATISTA:</strong> {{contract.contractor}}</h6>
+
+          <p><i>CONTENIDO DEL INFORME MENSUAL</i></p>
+          <ul *ngFor="let data of dataService.dataMonth">
+            <li *ngIf="data.agreements![i] && data.agreements![i] !='OK'">MEPI-MN1-IN-15-FR-2 - {{data.title | uppercase }}:
+              {{data.agreements![i]}}</li>
           </ul>
-        </li>
+
+          <p><i>REPORTES EJECUCIÓN MENSUAL CONTRATO DE OBRA O CONVENIO</i></p>
+          <ul *ngFor="let data of dataService.dataReport">
+            <li *ngIf="data.agreements![i] && data.agreements![i] !='OK'">{{data.format | uppercase}} - {{data.title | uppercase }}:
+              {{data.agreements![i]}}</li>
+          </ul>
+
+        </div>
+
+        <h2>NOTAS Y RECOMENDACIONES GENERALES</h2>
+
+        <p style="text-align:justify">{{dataService.notesData}}</p>
+
+        <p>Para la aprobación del informe en mención por favor realizar respectivas correcciones.</p>
+        <p>Muchas gracias.</p>
+        <p>Informe mensual revisado por: {{dataService.owner | titlecase}}</p>
       </div>
 
-
     </div>
-    <p>
-    <h2>OBSERVACIONES GENERALES DEL PROYECTO</h2>
-
-    <p><i>INTRODUCCIÓN.</i></p>
-    <ul>
-      <li
-        *ngIf="dataService.tableIntroduction[0].introductionStatus && dataService.tableIntroduction[0].introductionStatus !='OK'">
-        LOCALIZACIÓN DEL PROYECTO: {{dataService.tableIntroduction[0].introductionStatus}}</li>
-      <li
-        *ngIf="dataService.tableIntroduction[1].introductionStatus && dataService.tableIntroduction[1].introductionStatus !='OK'">
-        ZONA DE INFLUENCIA: {{dataService.tableIntroduction[1].introductionStatus}}</li>
-      <li
-        *ngIf="dataService.tableIntroduction[2].introductionStatus && dataService.tableIntroduction[2].introductionStatus !='OK'">
-        INVENTARIO Y ESTADO INICIAL DE LA VÍA: {{dataService.tableIntroduction[2].introductionStatus}}</li>
-      <li
-        *ngIf="dataService.tableIntroduction[3].introductionStatus && dataService.tableIntroduction[3].introductionStatus !='OK'">
-        CARACTERÍSTICAS TECNICAS DEL PROYECTO: {{dataService.tableIntroduction[3].introductionStatus}}</li>
-    </ul>
-
-    <p><i>DESCRIPCIÓN DEL PROYECTO.</i></p>
-    <ul>
-      <li
-        *ngIf="dataService.tableIntroduction[0].descriptionStatus && dataService.tableIntroduction[0].descriptionStatus !='OK'">
-        PROCESO DE SELECCIÓN: {{dataService.tableIntroduction[0].descriptionStatus}}</li>
-      <li
-        *ngIf="dataService.tableIntroduction[1].descriptionStatus && dataService.tableIntroduction[1].descriptionStatus !='OK'">
-        ID SECOP: {{dataService.tableIntroduction[1].descriptionStatus}}</li>
-      <li
-        *ngIf="dataService.tableIntroduction[2].descriptionStatus && dataService.tableIntroduction[2].descriptionStatus !='OK'">
-        INFORMACIÓN DEL PROGRAMA O PLAN DE GOBIERNO: {{dataService.tableIntroduction[2].descriptionStatus}}</li>
-      <li
-        *ngIf="dataService.tableIntroduction[1].descriptionStatus && dataService.tableIntroduction[1].descriptionStatus !='OK'">
-        PERSONAL A CARGO DE PARTE DEL INVIAS: {{dataService.tableIntroduction[3].descriptionStatus}}</li>
-    </ul>
-
-    <h2>OBSERVACIONES AL CONTRATO DE INTERVENTORÍA</h2>
-    <p><i>INFORMACIÓN DEL CONTRATO</i></p>
-    <ul>
-      <li *ngIf="dataService.contractIntervenor[0] && dataService.contractIntervenor[0] !== 'OK'">INFORMACIÓN GENERAL
-        DEL CONTRATO: {{dataService.contractIntervenor[0]}}</li>
-      <li *ngIf="dataService.contractIntervenor[1] && dataService.contractIntervenor[1] !== 'OK'">DESCRIPCIÓN DE
-        ACTIVIDADES EJECUTADAS MES: {{dataService.contractIntervenor[1]}}</li>
-      <li *ngIf="dataService.contractIntervenor[2] && dataService.contractIntervenor[2] !== 'OK'">ITEMS NO PREVISTOS:
-        {{dataService.contractIntervenor[2]}}</li>
-      <li *ngIf="dataService.contractIntervenor[3] && dataService.contractIntervenor[3] !== 'OK'">AVANCE Y ACCIONES A
-        SEGUIR: {{dataService.contractIntervenor[3]}}</li>
-    </ul>
-
-    <p><i>CONTENIDO DEL INFORME MENSUAL</i></p>
-    <ul>
-      <li *ngIf="dataService.monthIntervenor  && dataService.monthIntervenor != 'OK'">MEPI-MN1-IN-15-FR-1 - LISTA DE
-        CHEQUEO: {{dataService.monthIntervenor}}</li>
-    </ul>
-
-    <p><i>REPORTES EJECUCIÓN MENSUAL CONTRATO DE INTERVENTORÍA</i></p>
-    <ul>
-      <li *ngIf="this.dataService.reportIntervenor[1] && this.dataService.reportIntervenor[1] != 'OK'">
-        MEPI-MN1-IN-15-FR-4 - MAQUINARIA Y EQUIPO: {{this.dataService.reportIntervenor[1]}}</li>
-      <li *ngIf="this.dataService.reportIntervenor[2] && this.dataService.reportIntervenor[2] != 'OK'">
-        MEPI-MN1-IN-15-FR-5 - EQUIPO Y VEHÍCULOS: {{this.dataService.reportIntervenor[2]}}</li>
-      <li *ngIf="this.dataService.reportIntervenor[4] && this.dataService.reportIntervenor[4] != 'OK'">
-        MEPI-MN1-IN-15-FR-7 - PERSONAL, CONTROL DE APORTES Y SEGURIDAD SOCIAL: {{this.dataService.reportIntervenor[4]}}
-      </li>
-      <li *ngIf="this.dataService.reportIntervenor[6] && this.dataService.reportIntervenor[6] != 'OK'">
-        MEPI-MN1-IN-15-FR-9 - INFORME FINANCIERO: {{this.dataService.reportIntervenor[6]}} </li>
-      <li *ngIf="this.dataService.reportIntervenor[8] && this.dataService.reportIntervenor[8] != 'OK'">
-        MEPI-MN1-IN-15-FR-11 - ENSAYOS DE LABORATORIO: {{this.dataService.reportIntervenor[8]}}</li>
-      <li *ngIf="this.dataService.reportIntervenor[10] && this.dataService.reportIntervenor[10] != 'OK'">
-        MEPI-MN1-IN-15-FR-13 - SEGUIMIENTO GARANTÍAS Y SEGUROS: {{this.dataService.reportIntervenor[10]}}</li>
-      <li *ngIf="this.dataService.reportIntervenor[12] && this.dataService.reportIntervenor[12] != 'OK'">
-        MEPI-MN1-IN-9-FR-2 - PLAN DE CARGAS: {{this.dataService.reportIntervenor[12]}}</li>
-      <li *ngIf="this.dataService.reportIntervenor[13] && this.dataService.reportIntervenor[13] != 'OK'">
-        MEPI-MN1-IN-9-FR-2 - SEGUIMIENTO AL PLAN DE CARGAS:{{this.dataService.reportIntervenor[13]}}</li>
-      <li *ngIf="this.dataService.reportIntervenor[16] && this.dataService.reportIntervenor[16] != 'OK'">CONCLUSIONES
-        Y/O RECOMENDACIONES: {{this.dataService.reportIntervenor[16]}}</li>
-    </ul>
-
-    <div *ngFor="let contract of contractor; let i = index">
-      <h2>OBSERVACIONES AL CONTRATO DE OBRA O CONVENIO No.: {{contract.agreement}}</h2>
-
-      <p><i>INFORMACIÓN DEL CONTRATO</i></p>
-      <ul *ngFor="let data of dataService.dataContracts; let isLast = last">
-        <li *ngIf="!isLast && data.agreements![i] && data.agreements![i] !='OK'">{{data.title | uppercase }}:
-          {{data.agreements![i]}}</li>
-      </ul>
-
-      <p><i>CONTENIDO DEL INFORME MENSUAL</i></p>
-      <ul *ngFor="let data of dataService.dataMonth">
-        <li *ngIf="data.agreements![i] && data.agreements![i] !='OK'">MEPI-MN1-IN-15-FR-2 - {{data.title | uppercase }}:
-          {{data.agreements![i]}}</li>
-      </ul>
-
-      <p><i>REPORTES EJECUCIÓN MENSUAL CONTRATO DE OBRA O CONVENIO</i></p>
-      <ul *ngFor="let data of dataService.dataReport">
-        <li *ngIf="data.agreements![i] && data.agreements![i] !='OK'">{{data.format | uppercase}} - {{data.title | uppercase }}:
-          {{data.agreements![i]}}</li>
-      </ul>
-
-    </div>
-
-    <h2>NOTAS Y RECOMENDACIONES GENERALES</h2>
-
-    <p style="text-align:justify">{{dataService.notesData}}</p>
-
-    <p>Para la aprobación del informe en mención por favor realizar respectivas correcciones.</p>
-    <p>Muchas gracias.</p>
-    <p>Informe mensual revisado por: Edgar Daniel Ojeda Huertas</p>
   </div>
 </div>
